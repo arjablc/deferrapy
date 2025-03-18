@@ -11,7 +11,7 @@ class ToolsScreen extends StatefulWidget {
 
 class _ToolsScreenState extends State<ToolsScreen> {
   double _progress = 0.69;
-  double years = 123.4;
+  double years = 123.412;
 
   void _resetValue() {
     setState(() {
@@ -20,12 +20,25 @@ class _ToolsScreenState extends State<ToolsScreen> {
   }
 
   void _changeYears({required Change change}) {
-    final yearValue = switch (change) {
-      Change.day => 0.09,
-      Change.month => 0.9,
-      Change.week => 0.3,
-      Change.hour => 0.05,
-    };
+    double yearValue;
+    switch (change) {
+      case Change.day:
+        {
+          yearValue = (1 / 360);
+        }
+      case Change.month:
+        {
+          yearValue = 1 / 12;
+        }
+      case Change.week:
+        {
+          yearValue = 7 / 360;
+        }
+      case Change.hour:
+        {
+          yearValue = 1 / (360 * 24);
+        }
+    }
     setState(() {
       years += yearValue;
     });
@@ -35,7 +48,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Emoti Debt"),
+        title: Text("EmotiDebt"),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
@@ -81,7 +94,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
                                   borderRadius: BorderRadius.circular(12),
                                   value: value, // Example progress (70%)
                                   backgroundColor: Colors.grey[300],
-                                  color: Colors.deepPurple,
+                                  color: Colors.red,
                                 );
                               },
                             ),
@@ -99,9 +112,10 @@ class _ToolsScreenState extends State<ToolsScreen> {
                               .copyWith(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "- ${years.toStringAsFixed(2)} years",
+                          "- ${years.toStringAsFixed(3)} years",
                           style: TextStyle(
                             fontSize: 16,
+                            color: Colors.red,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -198,7 +212,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
                       ),
                     ),
                     _QuickActionButton(
-                      label: 'Reset Now',
+                      label: 'Apply Now',
                       onPressed: () => _resetValue(),
                     ),
                   ],
