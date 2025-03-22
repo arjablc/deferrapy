@@ -1,6 +1,7 @@
 import 'package:defrappy/screens/emoti_screen.dart';
 import 'package:defrappy/screens/favorite_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../widgets/tab_button.dart';
 import 'profile_screen.dart';
@@ -124,11 +125,21 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           child: Center(
-                            child: Icon(
-                              tiles[index].icon,
-                              size: constraints.maxWidth * 0.25,
-                              color: Colors.black87,
-                            ),
+                            child:
+                                tiles[index].title == "EmotiDebt"
+                                    ? Padding(
+                                      padding: const EdgeInsets.only(right: 6),
+                                      child: SvgPicture.asset(
+                                        'assets/emoti-icon.svg',
+                                        width: constraints.maxWidth * 0.25,
+                                        height: constraints.maxWidth * 0.25,
+                                      ),
+                                    )
+                                    : Icon(
+                                      tiles[index].icon,
+                                      size: constraints.maxWidth * 0.25,
+                                      color: Colors.black87,
+                                    ),
                           ),
                         ),
                         const SizedBox(height: 4),

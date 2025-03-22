@@ -132,68 +132,61 @@ class _ToolsScreenState extends State<ToolsScreen> {
             const SizedBox(height: 16),
 
             // Quick Actions Card
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height / 3,
-              child: Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Quick Action:",
-                        style: Theme.of(context).textTheme.headlineSmall!
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Quick Action:",
+                      style: Theme.of(context).textTheme.headlineSmall!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Defer Processing",
+                        style: Theme.of(context).textTheme.titleMedium!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Defer Processing",
-                          style: Theme.of(context).textTheme.titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      childAspectRatio: 2.5,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      children: [
+                        _QuickActionButton(
+                          label: '1 Day',
+                          onPressed: () => _changeYears(change: Change.day),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Expanded(
-                        child: GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 2,
-                                crossAxisSpacing: 8,
-                                mainAxisSpacing: 8,
-                              ),
-                          children: [
-                            _QuickActionButton(
-                              label: '1 Day',
-                              onPressed: () => _changeYears(change: Change.day),
-                            ),
-                            _QuickActionButton(
-                              label: '1 Week',
-                              onPressed:
-                                  () => _changeYears(change: Change.week),
-                            ),
-                            _QuickActionButton(
-                              label: '1 Month',
-                              onPressed:
-                                  () => _changeYears(change: Change.month),
-                            ),
-                            _QuickActionButton(
-                              label: '6 Month',
-                              onPressed:
-                                  () => _changeYears(change: Change.sixMonth),
-                            ),
-                          ],
+                        _QuickActionButton(
+                          label: '1 Week',
+                          onPressed: () => _changeYears(change: Change.week),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
+                        _QuickActionButton(
+                          label: '1 Month',
+                          onPressed: () => _changeYears(change: Change.month),
+                        ),
+                        _QuickActionButton(
+                          label: '6 Month',
+                          onPressed:
+                              () => _changeYears(change: Change.sixMonth),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
                 ),
               ),
             ),

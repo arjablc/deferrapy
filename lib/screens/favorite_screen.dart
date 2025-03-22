@@ -1,6 +1,7 @@
 import 'package:defrappy/screens/emoti_screen.dart';
 import 'package:defrappy/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/tab_button.dart';
 
@@ -134,17 +135,39 @@ class CustomCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    margin: EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Icon(icon, size: 32, color: Colors.black87),
-                    ),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Container(
+                        width: constraints.maxWidth * 0.4,
+                        height: constraints.maxWidth * 0.4,
+                        margin: EdgeInsets.only(bottom: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.grey[400]!,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(
+                          child:
+                              titile == "EmotiDebt"
+                                  ? Padding(
+                                    padding: const EdgeInsets.only(right: 6),
+                                    child: SvgPicture.asset(
+                                      'assets/emoti-icon.svg',
+                                      width: constraints.maxWidth * 0.25,
+                                      height: constraints.maxWidth * 0.25,
+                                    ),
+                                  )
+                                  : Icon(
+                                    icon,
+                                    size: constraints.maxWidth * 0.25,
+                                    color: Colors.black87,
+                                  ),
+                        ),
+                      );
+                    },
                   ),
                   Text(
                     titile,
