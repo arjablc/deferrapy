@@ -99,37 +99,61 @@ class _MyHomePageState extends State<MyHomePage> {
             child: GridView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3, // Max width per item
-                childAspectRatio: 1, // Adjust height ratio
-                crossAxisSpacing: 12,
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+                crossAxisSpacing: 0,
                 mainAxisSpacing: 0,
               ),
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      margin: const EdgeInsets.symmetric(horizontal: 12),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(child: Icon(tiles[index].icon, size: 32)),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      tiles[index].title,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleMedium!.copyWith(fontSize: 12),
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: constraints.maxWidth * 0.6,
+                          height: constraints.maxWidth * 0.6,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Colors.grey[400]!,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              tiles[index].icon,
+                              size: constraints.maxWidth * 0.25,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
+                              child: Text(
+                                tiles[index].title,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.titleMedium!.copyWith(fontSize: 12),
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
             ),
