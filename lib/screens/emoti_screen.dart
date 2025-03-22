@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum Change { day, month, week, hour }
+enum Change { day, month, week, hour, sixMonth }
 
 class ToolsScreen extends StatefulWidget {
   const ToolsScreen({super.key});
@@ -11,7 +11,7 @@ class ToolsScreen extends StatefulWidget {
 
 class _ToolsScreenState extends State<ToolsScreen> {
   double _progress = 0.69;
-  double years = 123.412;
+  double years = 122.412;
 
   void _resetValue() {
     setState(() {
@@ -37,6 +37,10 @@ class _ToolsScreenState extends State<ToolsScreen> {
       case Change.hour:
         {
           yearValue = 1 / (360 * 24);
+        }
+      case Change.sixMonth:
+        {
+          yearValue = 6 / 12;
         }
     }
     setState(() {
@@ -166,12 +170,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
                               ),
                           children: [
                             _QuickActionButton(
-                              label: '5 Hours',
-                              onPressed:
-                                  () => _changeYears(change: Change.hour),
-                            ),
-                            _QuickActionButton(
-                              label: '24 Hours',
+                              label: '1 Day',
                               onPressed: () => _changeYears(change: Change.day),
                             ),
                             _QuickActionButton(
@@ -183,6 +182,11 @@ class _ToolsScreenState extends State<ToolsScreen> {
                               label: '1 Month',
                               onPressed:
                                   () => _changeYears(change: Change.month),
+                            ),
+                            _QuickActionButton(
+                              label: '6 Month',
+                              onPressed:
+                                  () => _changeYears(change: Change.sixMonth),
                             ),
                           ],
                         ),
@@ -213,6 +217,10 @@ class _ToolsScreenState extends State<ToolsScreen> {
                     ),
                     _QuickActionButton(
                       label: 'Apply Now',
+                      pad: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       onPressed: () => _resetValue(),
                     ),
                   ],
@@ -229,16 +237,30 @@ class _ToolsScreenState extends State<ToolsScreen> {
 class _QuickActionButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
+  final EdgeInsets? pad;
 
-  const _QuickActionButton({required this.label, required this.onPressed});
+  const _QuickActionButton({
+    required this.label,
+    required this.onPressed,
+    this.pad,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      label: Text(label),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    return InkWell(
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      onTap: onPressed,
+      child: Container(
+        padding: pad ?? EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 1),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Center(
+          child: Text(label, style: Theme.of(context).textTheme.titleSmall),
+        ),
       ),
     );
   }

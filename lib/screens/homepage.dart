@@ -5,6 +5,13 @@ import 'package:flutter/material.dart';
 import '../widgets/tab_button.dart';
 import 'profile_screen.dart';
 
+class TileEntity {
+  final String title;
+  final IconData icon;
+
+  const TileEntity({required this.title, required this.icon});
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -13,7 +20,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> tiles = ["Compute state", "Emotion", "Mental Health"];
+  List<TileEntity> tiles = [
+    const TileEntity(title: "Compart", icon: Icons.share),
+    const TileEntity(title: "Crisis Queue", icon: Icons.emergency),
+    const TileEntity(title: "EmotiDebt", icon: Icons.psychology),
+    const TileEntity(title: "Guilt Eraser", icon: Icons.cleaning_services),
+    const TileEntity(title: "Library", icon: Icons.library_books),
+    const TileEntity(title: "NopePad", icon: Icons.note_alt),
+    const TileEntity(
+      title: "Self-care Automations",
+      icon: Icons.self_improvement,
+    ),
+    const TileEntity(title: "Toxic Immunity", icon: Icons.shield),
+    const TileEntity(title: "Trauma Rewind", icon: Icons.psychology_alt),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TabButton(
                     isActive: false,
-                    label: "Favorite",
+                    label: "Favorited",
                     onPressed:
                         () => Navigator.push(
                           context,
@@ -77,32 +97,39 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(
             child: GridView.builder(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, // Max width per item
-                childAspectRatio: 0.9, // Adjust height ratio
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
+                childAspectRatio: 1, // Adjust height ratio
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 0,
               ),
               itemCount: tiles.length,
               itemBuilder: (context, index) {
-                return GridTile(
-                  footer: Text(
-                    tiles[index],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      margin: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(child: Icon(tiles[index].icon, size: 32)),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      tiles[index].title,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleMedium!.copyWith(fontSize: 12),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Center(child: Icon(Icons.image, size: 40)),
-                  ),
+                  ],
                 );
               },
             ),

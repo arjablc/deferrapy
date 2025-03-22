@@ -32,7 +32,7 @@ class FavoriteScreen extends StatelessWidget {
                 children: [
                   TabButton(
                     isActive: true,
-                    label: "Favorite",
+                    label: "Favorited",
                     onPressed: () {},
                   ),
                   TabButton(
@@ -73,13 +73,22 @@ class FavoriteScreen extends StatelessWidget {
                   child: CustomCard(
                     titile: "EmotiDebt",
                     hours: 23,
-                    subTitile: "",
+                    usageCount: 834,
+                    icon: Icons.psychology,
                   ),
                 ),
                 CustomCard(
-                  titile: "Turn Clients into self love",
-                  subTitile: "",
-                  hours: 2.0,
+                  titile: "How to Trick Clients into Inner Peace",
+                  hours: 10.0,
+                  usageCount: 234,
+                  icon: Icons.book,
+                ),
+
+                CustomCard(
+                  titile: "Reframing or Gaslighting? A Therapist's Guide",
+                  hours: 14.0,
+                  usageCount: 554,
+                  icon: Icons.psychology_alt_outlined,
                 ),
               ],
             ),
@@ -95,13 +104,15 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     super.key,
     required this.titile,
-    required this.subTitile,
     required this.hours,
+    required this.usageCount,
+    required this.icon,
   });
 
   final String titile;
-  final String subTitile;
   final double hours;
+  final int usageCount;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -110,60 +121,76 @@ class CustomCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.all(8),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 12.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 16,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 8,
           children: [
             Expanded(
+              flex: 5,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 80,
-                    height: 80,
+                    width: 60,
+                    height: 60,
                     margin: EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
-                      color: Colors.grey[300], // Placeholder color
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(
-                      Icons.image,
-                      size: 40,
-                      color: Colors.grey,
+                    child: Center(
+                      child: Icon(icon, size: 32, color: Colors.black87),
                     ),
                   ),
                   Text(
                     titile,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    subTitile,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                    ),
+                    overflow: TextOverflow.visible,
                   ),
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: Colors.black),
-                      text: "Used ${hours.toInt()}\n",
-                      children: [TextSpan(text: "hours ago")],
+            Flexible(
+              flex: 2,
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  text: "Used ",
+                  children: [
+                    TextSpan(
+                      text: "$usageCount",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    TextSpan(text: "\ntimes"),
+                  ],
                 ),
-              ],
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  text: "Used ",
+                  children: [
+                    TextSpan(
+                      text: "${hours.toInt()}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(text: "\nhours ago"),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
